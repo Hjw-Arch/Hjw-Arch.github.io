@@ -142,7 +142,7 @@ pwa:
 paginate: 10
 
 # 网站的基础 URL
-baseurl: "/Hjw-Arch.github.io"
+baseurl: ""
 
 # ------------ 下面的设置不建议修改 ------------------
 
