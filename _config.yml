@@ -113,7 +113,7 @@ comments:
     issue_term: # < 链接 | 路径 | 标题 | ...>
   # Waline 评论系统 › https://waline.js.org/
   waline:
-    server: https://waline-alpha-mocha.vercel.app/  # Vercal 服务端地址
+    server: https://waline-hjw-archs-projects.vercel.app/  # Vercal 服务端地址
     placeholder: 说点什么吧！ # 空白评论框时显示的文字
     avatar: mp # 默认头像  › https://waline.js.org/guide/client/avatar.html
   # Giscus 选项 › https://giscus.app
