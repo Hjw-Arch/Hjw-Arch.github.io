@@ -1,0 +1,64 @@
+---
+title: RISC-V 交叉编译链安装教程
+date: 2024-1-1 12:40:00
+categories: [体系结构, RISCV]
+tags: [体系结构， RISC-V, 教程]
+---
+
+## 安装依赖
+```shell
+sudo apt install autoconf automake autotools-dev curl python3 python3-pip 
+sudo apt install libmpc-dev libmpfr-dev libgmp-dev gawk 
+sudo apt install build-essential bison flex texinfo gperf libtool patchutils 
+sudo apt install bc zlib1g-dev libexpat-dev ninja-build git cmake libglib2.0-dev
+```
+
+## 下载源码
+```shell
+$ git clone --recursive https://github.com/riscv/riscv-gnu-toolchain
+```
+这是一个非常漫长的过程，这里提供中国科大的压缩包[**点此下载**]https://soc.ustc.edu.cn/CECS/appendix/riscv-gnu-toolchain.zip
+
+## 编译安装
+进入源码目录，创建build文件夹并进入：
+
+```shell
+cd riscv-gnu-toolchain
+mkdir build
+cd build
+```
+
+RISC-V GCC可以编译成以下几个版本：
+* riscv32-unknown-elf-gcc
+* riscv64-unknown-elf-gcc
+* riscv32-unknown-linux-gnu-gcc
+* riscv64-unknown-linux-gnu-gcc
+* riscv64-multilib-elf-gcc
+* riscv64-liunx-multilib-gcc
+具体请参考[**点此博客**]https://blog.csdn.net/DP29syM41zyGndVF/article/details/106110178 或者 [官方链接]https://github.com/riscv-collab/riscv-gnu-toolchain
+我这里需要编译的是支持乘除法扩展的 riscv64-unknown-linux-gnu 工具链，因此需要执行以下命令进行配置：
+
+```shell
+../configure --prefix=/opt/riscv64 --enable-multilib --target=riscv64-linux-multilib
+```
+
+> **configure**可以多次配置，安装多个不同的工具链，有需要可以安装多个，重复上述步骤并按照链接讲解更改配置命令即可。
+{: .prompt-tip }
+
+之后执行编译。过程会非常漫长，可以使用多线程加速：
+```shell
+sudo make linux -j <nproc>
+```
+编译完成后，就可以在 /opt/riscv64/bin 目录下找到交叉编译工具链了。
+
+## 添加环境变量并测试
+我们可以通过以下命令将交叉编译工具链添加到环境变量中：
+```shell
+echo 'export PATH=/opt/riscv64/bin:$PATH' >> ~/.bashrc
+source ~/.bashrc
+```
+之后，我们就可以通过以下命令来查看交叉编译工具链的版本：
+```shell
+riscv64-unknown-linux-gnu-gcc --version
+```
+若输出了编译器的版本信息，则说明已经安装成功。
