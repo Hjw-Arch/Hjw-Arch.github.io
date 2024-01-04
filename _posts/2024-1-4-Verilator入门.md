@@ -8,7 +8,7 @@ tags: [数字电路, Verilog, Verilator, 教程]
 Verilator 是一款开源的支持 **Verilog** 和 **SystemVerilog** 仿真工具。它能够将给定的电路设计翻译成 **C++** 或者 **SystemC** 的库等中间文件，最后使用 **C/C++** 编写激励测试，去调用前面生成的中间文件，由 **C/C++** 编译器编译执行，来完成仿真。此外，它也具有静态代码分析的功能。
 
 ## 一个简单的例子
-来自[官方网站](https://verilator.org/guide/latest/example_cc.html)
+来自[**官方网站**](https://verilator.org/guide/latest/example_cc.html)
 ```shell
 mkdir test_dir
 cd test_dir
@@ -27,30 +27,34 @@ endmodule
 将以下的**C++**代码写入文件`sim_main.cpp`:
 
 ```c++
-#include "Vour.h" // Verilator生成的头文件 （此时还未生成)
+#include "Vtop.h" // Verilator生成的头文件 （此时还未生成)
 #include "verilated.h" // Verilator常见的例程
-    int main(int argc, char** argv) {
-	VerilatedContext* contextp = new VerilatedContext; // 构造 VerilatedContext 来保存模拟时间等
-	// 传递参数，以便已验证的代码可以看到它们，例如 $value$plusargs。
-	//  在创建任何模型之前，需要调用此函数
-	contextp->commandArgs(argc, argv); 
+int main(int argc, char** argv) {
 
-	// 从Verilating生成的Vtop.h构建Verilated模型
-	Vour* top = new Vour{contextp};
+    // 构造 VerilatedContext 来保存模拟时间等
+    VerilatedContext* contextp = new VerilatedContext;
+	
+    // 传递参数，以便已验证的代码可以看到它们，例如 $value$plusargs。
+    //  在创建任何模型之前，需要调用此函数
+    contextp->commandArgs(argc, argv); 
 
-	while (!contextp->gotFinish()) { 
-	    top->eval();  //更新电路状态
-	}
-	delete top; // 清除模型
-	delete contextp;
-	return 0;
+    // 从Verilating生成的Vtop.h构建Verilated模型
+    Vtop* top = new Vtop{contextp};
+
+    while (!contextp->gotFinish()) { 
+	top->eval();  //更新电路状态
+    }
+
+    delete top; // 清除模型
+    delete contextp;
+    return 0;
 }
 ```
 
 使用下面的命令来运行Verilator:
 
 ```shell
-verilator --cc --exe --build -j 0 -Wall sim_main.cpp our.v
+verilator --cc --exe --build -j 0 -Wall sim_main.cpp top.v
 ```
 
 **说明**
