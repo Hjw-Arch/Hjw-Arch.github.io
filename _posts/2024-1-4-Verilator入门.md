@@ -29,8 +29,8 @@ endmodule
 ```c++
 #include "Vtop.h" // Verilator生成的头文件 （此时还未生成)
 #include "verilated.h" // Verilator常见的例程
-int main(int argc, char** argv) {
 
+int main(int argc, char** argv) {
     // 构造 VerilatedContext 来保存模拟时间等
     VerilatedContext* contextp = new VerilatedContext;
 	
