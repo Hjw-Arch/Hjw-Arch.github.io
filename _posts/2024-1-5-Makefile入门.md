@@ -204,7 +204,7 @@ make <arg-var>=<value>
 
 例如，对于下面的`Makefile`：
 
-```
+```makefile
 all:
     @echo Hello, $(ENV-VAR) and $(ARG_VAR)!
 ```
